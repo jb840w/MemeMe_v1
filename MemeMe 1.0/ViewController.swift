@@ -21,6 +21,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var bottomToolBar: UIToolbar!
     
+    
 
     // MARK: View (willAppear, DidLoad, willDisappear)
     override func viewWillAppear(animated: Bool) {
@@ -125,14 +126,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        if self.view.frame.origin.y == 0 {
+        // keep topTextField visible while editing / only change y value for bottomTextField
+        if self.view.frame.origin.y == 0 && !topTextField.isFirstResponder() {
             self.view.frame.origin.y -= getKeyboardHeight(notification)
+            
         }
         
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        self.view.frame.origin.y += getKeyboardHeight(notification)
+        // only change y value if editing bottomTextField
+        if !topTextField.isFirstResponder() {
+            self.view.frame.origin.y += getKeyboardHeight(notification)
+        }
+        
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
@@ -179,6 +186,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return memedImage
     }
 
+    @IBAction func cancel(sender: UIBarButtonItem) {
+        topTextField.text = ""
+        bottomTextField.text = ""
+        imagePickerView.image = nil
+    }
 
     
 
