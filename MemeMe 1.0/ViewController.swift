@@ -26,6 +26,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Does your device have a camera?
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         
         // Enable/Disable share button
@@ -42,12 +43,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        
+        // text field setup
         bottomTextField.delegate = self
         bottomTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.textAlignment = .Center
         topTextField.delegate = self
         topTextField.defaultTextAttributes = memeTextAttributes
-        
+        topTextField.textAlignment = .Center
         
         
     }
@@ -77,17 +79,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
     
+    // Action to choose activity (share menu)
     @IBAction func activityShareAction(sender: UIBarButtonItem) {
+        // Setting up and general iOS sharing
         let image = generateMemedImage()
         let itemsToShare = [image]
-        //        let activityVC = UIActivityViewControllerCompletionWithItemsHandler()
         let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
         activityViewController.excludedActivityTypes = []
         self.presentViewController(activityViewController, animated: true, completion: nil)
-        //        activityViewController.completionWithItemsHandler =
-        print(activityViewController.completionWithItemsHandler)
-        topToolBar.hidden = false
-        bottomToolBar.hidden = false
+        
+        // Save the meme inside the app
+        // Per honesty guidlines I found help with this code in a forum post with Abdallah_ElMenoufy & Danny46
+        activityViewController.completionWithItemsHandler = {
+            (activiy, success, items, error) in
+            if success {
+                self.saveMeme()
+                print("Meme was saved 👍🏻")
+                self.topToolBar.hidden = false
+                self.bottomToolBar.hidden = false
+            }
+        }
+        
     }
     
     // MARK: Actions - imagePicker
@@ -102,7 +114,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSStrokeColorAttributeName: UIColor.blackColor(),
         NSForegroundColorAttributeName: UIColor.whiteColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        NSStrokeWidthAttributeName: -3.0
+        NSStrokeWidthAttributeName: -3.0,
+        
     ]
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -112,7 +125,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        self.view.frame.origin.y -= getKeyboardHeight(notification)
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= getKeyboardHeight(notification)
+        }
+        
     }
     
     func keyboardWillHide(notification: NSNotification) {
@@ -147,13 +163,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // Part of the learning but doesn't seem to be necessary yet with my build
     
-    func save() {
+    func saveMeme() {
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: generateMemedImage())
     }
     
     func generateMemedImage() -> UIImage {
-        
-        // TODO: Hide toolbar and navbar
         
         topToolBar.hidden = true
         bottomToolBar.hidden = true
@@ -161,8 +175,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
-        // TODO:  Show toolbar and navbar
         
         return memedImage
     }
