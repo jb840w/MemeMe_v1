@@ -12,7 +12,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    // setup Struct per code review suggestion in App Delegate to conform to MVC
+    struct Meme {
+        var topText: String
+        var bottomText: String
+        var image: UIImage
+        var memedImage: UIImage
+    }
+    
+    // create a holder for saved memes
+    var memes = [Meme]()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.

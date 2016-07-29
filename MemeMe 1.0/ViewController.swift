@@ -21,6 +21,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var bottomToolBar: UIToolbar!
     
+    // Setup delegate connection for meme Struct and storage
+    // Per honesty guidlines I found help for this from StackOverFlow http://stackoverflow.com/questions/32810069/access-structure-in-swift-array
+    
+    let memeDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
 
     // MARK: View (willAppear, DidLoad, willDisappear)
@@ -45,12 +49,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // Do any additional setup after loading the view, typically from a nib.
         
         // text field setup
-        bottomTextField.delegate = self
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.textAlignment = .Center
-        topTextField.delegate = self
-        topTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.textAlignment = .Center
+        setTextField(topTextField)
+        setTextField(bottomTextField)
+        
         
         
     }
@@ -65,43 +66,44 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // Action to choose the camera or album
     @IBAction func pickAnImage(sender: AnyObject) {
         
+        let senderOption = sender.tag
+        
         let pickerController = UIImagePickerController()
         pickerController.delegate = self
         
-        // if statement, which picker was chosen
-        if sender.tag == 0 {
+        // I switched (no pun intended) this up from my original submission, switch seemed more clean than multiple if/else
+        
+        switch senderOption {
+        case 0: // tag.0 is Camera
             pickerController.sourceType = .Camera
             self.presentViewController(pickerController, animated: true, completion: nil)
-        } else if sender.tag == 1 {
+        case 1: // tag.1 is PhotoLibrary
             pickerController.sourceType = .PhotoLibrary
             self.presentViewController(pickerController, animated: true, completion: nil)
+        case 2: // tag.3 is action button
+            // Setting up and general iOS sharing
+            let image = generateMemedImage()
+            let itemsToShare = [image]
+            let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+            activityViewController.excludedActivityTypes = []
+            self.presentViewController(activityViewController, animated: true, completion: nil)
+            
+            // Save the meme inside the app
+            // Per honesty guidlines I found help with this code in a forum post with Abdallah_ElMenoufy & Danny46
+            activityViewController.completionWithItemsHandler = {
+                (activiy, success, items, error) in
+                if success {
+                    self.saveMeme()
+                    self.topToolBar.hidden = false
+                    self.bottomToolBar.hidden = false
+                }
+            }
+        default:
+            print("It doesn't look like you have chosen a viewController")
         }
-        
-        
+
     }
     
-    // Action to choose activity (share menu)
-    @IBAction func activityShareAction(sender: UIBarButtonItem) {
-        // Setting up and general iOS sharing
-        let image = generateMemedImage()
-        let itemsToShare = [image]
-        let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
-        activityViewController.excludedActivityTypes = []
-        self.presentViewController(activityViewController, animated: true, completion: nil)
-        
-        // Save the meme inside the app
-        // Per honesty guidlines I found help with this code in a forum post with Abdallah_ElMenoufy & Danny46
-        activityViewController.completionWithItemsHandler = {
-            (activiy, success, items, error) in
-            if success {
-                self.saveMeme()
-                print("Meme was saved 👍🏻")
-                self.topToolBar.hidden = false
-                self.bottomToolBar.hidden = false
-            }
-        }
-        
-    }
     
     // MARK: Actions - imagePicker
     
@@ -110,6 +112,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     // MARK: Actions / Attributes - TextFields
+    
+    // beautiful suggestion from review team that greatly simplifies these steps and kills a bit of the repetition
+    func setTextField(textField: UITextField) {
+        textField.delegate = self
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .Center
+
+    }
     
     let memeTextAttributes = [
         NSStrokeColorAttributeName: UIColor.blackColor(),
@@ -127,8 +137,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func keyboardWillShow(notification: NSNotification) {
         // keep topTextField visible while editing / only change y value for bottomTextField
-        if self.view.frame.origin.y == 0 && !topTextField.isFirstResponder() {
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+        if view.frame.origin.y == 0 && !topTextField.isFirstResponder() {
+            view.frame.origin.y -= getKeyboardHeight(notification)
             
         }
         
@@ -137,7 +147,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func keyboardWillHide(notification: NSNotification) {
         // only change y value if editing bottomTextField
         if !topTextField.isFirstResponder() {
-            self.view.frame.origin.y += getKeyboardHeight(notification)
+            view.frame.origin.y += getKeyboardHeight(notification)
         }
         
     }
@@ -160,18 +170,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // MARK: Save the Meme
     
-    struct Meme {
-        var topText: String
-        var bottomText: String
-        var image: UIImage
-        var memedImage: UIImage
-    }
-    
-    
-    // Part of the learning but doesn't seem to be necessary yet with my build
-    
     func saveMeme() {
-        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: generateMemedImage())
+        let meme = AppDelegate.Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: generateMemedImage())
+        
+        // now add it to the meme storage in my appdelegate 
+        memeDelegate.memes.append(meme)
+        print("Meme was saved 👍🏻")
     }
     
     func generateMemedImage() -> UIImage {
@@ -185,6 +189,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         return memedImage
     }
+    
+    // MARK: Cancel Action - clears all contents, does not alter saved memes.
 
     @IBAction func cancel(sender: UIBarButtonItem) {
         topTextField.text = ""
