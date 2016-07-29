@@ -46,7 +46,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         // text field setup
         setTextField(topTextField)
@@ -146,8 +145,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func keyboardWillHide(notification: NSNotification) {
         // only change y value if editing bottomTextField
-        if !topTextField.isFirstResponder() {
+        if view.frame.origin.y < 0 && !topTextField.isFirstResponder() {
             view.frame.origin.y += getKeyboardHeight(notification)
+            
         }
         
     }
