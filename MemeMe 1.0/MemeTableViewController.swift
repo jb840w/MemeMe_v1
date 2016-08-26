@@ -8,15 +8,22 @@
 
 import UIKit
 
-class MemeTableViewController: UIViewController, UITableViewDataSource {
+class MemeTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var tableView: UITableView!
     
     var memes : [Meme]!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        memes = (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+        let memeDelegate = UIApplication.sharedApplication().delegate
+        let appDelegate = memeDelegate as! AppDelegate
         
+        memes = appDelegate.memes
+        
+        self.tableView.reloadData()
+        print("\(memes)")
     }
     
     // MARK : TableView Stuffs

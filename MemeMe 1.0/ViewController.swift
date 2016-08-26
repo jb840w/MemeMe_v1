@@ -174,7 +174,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: generateMemedImage())
         
         // now add it to the meme storage in my appdelegate 
-        memes.append(meme)
+//        memes.append(meme)
+        (UIApplication.sharedApplication().delegate as! AppDelegate).memes.append(meme)
+        
         print("Meme was saved 👍🏻")
     }
     
@@ -196,6 +198,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         topTextField.text = ""
         bottomTextField.text = ""
         imagePickerView.image = nil
+        
+        print("\(memes)")
         
         dismissViewControllerAnimated(true, completion: nil)
     }
