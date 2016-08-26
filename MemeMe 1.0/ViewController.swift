@@ -24,8 +24,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // Setup delegate connection for meme Struct and storage
     // Per honesty guidlines I found help for this from StackOverFlow http://stackoverflow.com/questions/32810069/access-structure-in-swift-array
     
-    let memeDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
+//    let memeDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var memes : [Meme]!
 
     // MARK: View (willAppear, DidLoad, willDisappear)
     override func viewWillAppear(animated: Bool) {
@@ -51,7 +51,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         setTextField(topTextField)
         setTextField(bottomTextField)
         
-        
+        memes = (UIApplication.sharedApplication().delegate as! AppDelegate).memes
         
     }
     
@@ -171,10 +171,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // MARK: Save the Meme
     
     func saveMeme() {
-        let meme = AppDelegate.Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: generateMemedImage())
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: generateMemedImage())
         
         // now add it to the meme storage in my appdelegate 
-        memeDelegate.memes.append(meme)
+        memes.append(meme)
         print("Meme was saved 👍🏻")
     }
     
@@ -196,6 +196,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         topTextField.text = ""
         bottomTextField.text = ""
         imagePickerView.image = nil
+        
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
     
