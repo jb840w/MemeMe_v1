@@ -39,6 +39,7 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
         cell.textLabel?.text = memeCell.topText
         cell.detailTextLabel?.text = memeCell.bottomText
         cell.imageView?.image = memeCell.memedImage
+//        cell.imageView?.image?.size.width = 50
         
         return cell
         

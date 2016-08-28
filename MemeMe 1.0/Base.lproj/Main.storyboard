@@ -39,7 +39,7 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="myReuseIdentifier" textLabel="0MV-OG-DJS" detailTextLabel="LvM-ic-wG5" style="IBUITableViewCellStyleSubtitle" id="pn1-tL-5wv">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="myReuseIdentifier" textLabel="0MV-OG-DJS" detailTextLabel="LvM-ic-wG5" style="IBUITableViewCellStyleSubtitle" id="pn1-tL-5wv">
                                         <rect key="frame" x="0.0" y="92" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pn1-tL-5wv" id="ZsL-9H-Vrp">
