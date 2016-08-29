@@ -14,6 +14,9 @@
 		1D42AF2C1D4AAE0600640D9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D42AF2A1D4AAE0600640D9F /* LaunchScreen.storyboard */; };
 		1D42AF371D4AAE0600640D9F /* MemeMe_1_0Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D42AF361D4AAE0600640D9F /* MemeMe_1_0Tests.swift */; };
 		1D42AF421D4AAE0600640D9F /* MemeMe_1_0UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D42AF411D4AAE0600640D9F /* MemeMe_1_0UITests.swift */; };
+		1D9B2A451D73C7DA001C9D4A /* MemeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9B2A441D73C7DA001C9D4A /* MemeTableViewCell.swift */; };
+		1D9B2A471D73E414001C9D4A /* MemeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9B2A461D73E414001C9D4A /* MemeCollectionViewController.swift */; };
+		1D9B2A491D73E4FE001C9D4A /* MemeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9B2A481D73E4FE001C9D4A /* MemeCollectionViewCell.swift */; };
 		AE4620401D70125400667112 /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE46203F1D70125400667112 /* Meme.swift */; };
 		AE4620421D701AA100667112 /* MemeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4620411D701AA100667112 /* MemeTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -49,6 +52,9 @@
 		1D42AF3D1D4AAE0600640D9F /* MemeMe 1.0UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MemeMe 1.0UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D42AF411D4AAE0600640D9F /* MemeMe_1_0UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMe_1_0UITests.swift; sourceTree = "<group>"; };
 		1D42AF431D4AAE0600640D9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D9B2A441D73C7DA001C9D4A /* MemeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeTableViewCell.swift; sourceTree = "<group>"; };
+		1D9B2A461D73E414001C9D4A /* MemeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeCollectionViewController.swift; sourceTree = "<group>"; };
+		1D9B2A481D73E4FE001C9D4A /* MemeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeCollectionViewCell.swift; sourceTree = "<group>"; };
 		AE46203F1D70125400667112 /* Meme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
 		AE4620411D701AA100667112 /* MemeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,7 +110,10 @@
 				1D42AF211D4AAE0600640D9F /* AppDelegate.swift */,
 				AE46203F1D70125400667112 /* Meme.swift */,
 				1D42AF231D4AAE0600640D9F /* ViewController.swift */,
+				1D9B2A461D73E414001C9D4A /* MemeCollectionViewController.swift */,
+				1D9B2A481D73E4FE001C9D4A /* MemeCollectionViewCell.swift */,
 				AE4620411D701AA100667112 /* MemeTableViewController.swift */,
+				1D9B2A441D73C7DA001C9D4A /* MemeTableViewCell.swift */,
 				1D42AF251D4AAE0600640D9F /* Main.storyboard */,
 				1D42AF281D4AAE0600640D9F /* Assets.xcassets */,
 				1D42AF2A1D4AAE0600640D9F /* LaunchScreen.storyboard */,
@@ -264,7 +273,10 @@
 			files = (
 				AE4620401D70125400667112 /* Meme.swift in Sources */,
 				1D42AF241D4AAE0600640D9F /* ViewController.swift in Sources */,
+				1D9B2A451D73C7DA001C9D4A /* MemeTableViewCell.swift in Sources */,
 				1D42AF221D4AAE0600640D9F /* AppDelegate.swift in Sources */,
+				1D9B2A491D73E4FE001C9D4A /* MemeCollectionViewCell.swift in Sources */,
+				1D9B2A471D73E414001C9D4A /* MemeCollectionViewController.swift in Sources */,
 				AE4620421D701AA100667112 /* MemeTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

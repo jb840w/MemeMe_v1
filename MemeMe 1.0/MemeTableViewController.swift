@@ -23,7 +23,6 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
         memes = appDelegate.memes
         
         self.tableView.reloadData()
-        print("\(memes)")
     }
     
     // MARK : TableView Stuffs
@@ -33,13 +32,14 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("myReuseIdentifier", forIndexPath: indexPath)
-        let memeCell = memes[indexPath.row]
+        let cell : MemeTableViewCell = MemeTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "MemeCell")
         
+//        let cell = tableView.dequeueReusableCellWithIdentifier("myReuseIdentifier", forIndexPath: indexPath)
+        let memeCell = memes[indexPath.row]
+//
         cell.textLabel?.text = memeCell.topText
         cell.detailTextLabel?.text = memeCell.bottomText
         cell.imageView?.image = memeCell.memedImage
-//        cell.imageView?.image?.size.width = 50
         
         return cell
         
@@ -47,7 +47,7 @@ class MemeTableViewController: UIViewController, UITableViewDataSource, UITableV
 
     @IBAction func memeEditButton(sender: UIBarButtonItem) {
         
-        let storyboard = self.storyboard
+//        let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("MemeViewController") as! ViewController
         
         self.presentViewController(controller, animated: true, completion: nil)

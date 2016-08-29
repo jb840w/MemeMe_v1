@@ -177,7 +177,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 //        memes.append(meme)
         (UIApplication.sharedApplication().delegate as! AppDelegate).memes.append(meme)
         
-        print("Meme was saved 👍🏻")
     }
     
     func generateMemedImage() -> UIImage {
@@ -198,8 +197,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         topTextField.text = ""
         bottomTextField.text = ""
         imagePickerView.image = nil
-        
-        print("\(memes)")
         
         dismissViewControllerAnimated(true, completion: nil)
     }
